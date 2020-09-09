@@ -24,6 +24,9 @@ Resources:
           Properties:
             Path: /start
             Method: put
+      Policies:
+        - S3CrudPolicy:
+            BucketName: task-tracker-mvp-bucket
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
