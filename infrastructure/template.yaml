@@ -29,6 +29,7 @@ Resources:
       CodeUri: lambdas/start_task/
       Handler: app.lambda_handler
       Runtime: python3.8
+      Timeout: 10
       Events:
         StartTask:
           Type: Api
