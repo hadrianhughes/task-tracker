@@ -1,4 +1,4 @@
-# task-tracker-infrastructure
+# task-tracker-application
 
 This project contains source code and supporting files for a serverless application that you can deploy with the SAM CLI. It includes the following files and folders.
 
@@ -49,7 +49,7 @@ You can find your API Gateway Endpoint URL in the output values displayed after 
 Build your application with the `sam build --use-container` command.
 
 ```bash
-task-tracker-infrastructure$ sam build --use-container
+task-tracker-application$ sam build --use-container
 ```
 
 The SAM CLI installs dependencies defined in `hello_world/requirements.txt`, creates a deployment package, and saves it in the `.aws-sam/build` folder.
@@ -59,14 +59,14 @@ Test a single function by invoking it directly with a test event. An event is a 
 Run functions locally and invoke them with the `sam local invoke` command.
 
 ```bash
-task-tracker-infrastructure$ sam local invoke HelloWorldFunction --event events/event.json
+task-tracker-application$ sam local invoke HelloWorldFunction --event events/event.json
 ```
 
 The SAM CLI can also emulate your application's API. Use the `sam local start-api` to run the API locally on port 3000.
 
 ```bash
-task-tracker-infrastructure$ sam local start-api
-task-tracker-infrastructure$ curl http://localhost:3000/
+task-tracker-application$ sam local start-api
+task-tracker-application$ curl http://localhost:3000/
 ```
 
 The SAM CLI reads the application template to determine the API's routes and the functions that they invoke. The `Events` property on each function's definition includes the route and method for each path.
@@ -90,7 +90,7 @@ To simplify troubleshooting, SAM CLI has a command called `sam logs`. `sam logs`
 `NOTE`: This command works for all AWS Lambda functions; not just the ones you deploy using SAM.
 
 ```bash
-task-tracker-infrastructure$ sam logs -n HelloWorldFunction --stack-name task-tracker-infrastructure --tail
+task-tracker-application$ sam logs -n HelloWorldFunction --stack-name task-tracker-application$ --tail
 ```
 
 You can find more information and examples about filtering Lambda function logs in the [SAM CLI Documentation](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-logging.html).
@@ -100,8 +100,8 @@ You can find more information and examples about filtering Lambda function logs 
 Tests are defined in the `tests` folder in this project. Use PIP to install the [pytest](https://docs.pytest.org/en/latest/) and run unit tests.
 
 ```bash
-task-tracker-infrastructure$ pip install pytest pytest-mock --user
-task-tracker-infrastructure$ python -m pytest tests/ -v
+task-tracker-application$ pip install pytest pytest-mock --user
+task-tracker-application$ python -m pytest tests/ -v
 ```
 
 ## Cleanup
@@ -109,7 +109,7 @@ task-tracker-infrastructure$ python -m pytest tests/ -v
 To delete the sample application that you created, use the AWS CLI. Assuming you used your project name for the stack name, you can run the following:
 
 ```bash
-aws cloudformation delete-stack --stack-name task-tracker-infrastructure
+aws cloudformation delete-stack --stack-name task-tracker-application
 ```
 
 ## Resources
