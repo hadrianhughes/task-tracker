@@ -1,23 +1,17 @@
 import json
-import boto3
-from utils import response_for, epoch_now
-
-bucket_name = 'task-tracker-mvp-bucket'
-db_filename = 'task-tracker-db.json'
+from common import response_for, epoch_now, open_db
 
 def add_task_session(task_name):
     try:
-        s3 = boto3.resource('s3')
-        db = s3.Object(bucket_name=bucket_name, key=db_filename)
+        db = open_db()
         dbResponse = db.get()
         data = dbResponse['Body'].read()
     except:
-        print('Something went wrong when accessing the S3 Bucket')
+        print('An error occurred while attempting to access to S3 bucket')
 
     json_data = json.loads(data)
     sessions = json_data['sessions']
-    sessions_count = len(sessions)
-    last_session = sessions[-1] if sessions_count > 0 else None
+    last_session = sessions[-1] if len(sessions) > 0 else None
     now = epoch_now()
 
     if last_session and not 'stop' in last_session:
