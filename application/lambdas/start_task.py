@@ -7,7 +7,7 @@ def add_task_session(task_name):
         dbResponse = db.get()
         data = dbResponse['Body'].read()
     except:
-        print('An error occurred while attempting to access to S3 bucket')
+        return (500, 'An error occurred while attempting to access to S3 bucket')
 
     json_data = json.loads(data)
     sessions = json_data['sessions']
@@ -16,14 +16,14 @@ def add_task_session(task_name):
 
     if last_session and not 'stop' in last_session:
         if last_session['task_name'] == task_name:
-            return 304
+            return (304, '')
         else:
             last_session['stop'] = now
 
     sessions.append({ 'task_name': task_name, 'start': now })
     db.put(Body=json.dumps({ 'sessions': sessions }))
 
-    return 200
+    return (200, '')
 
 
 def lambda_handler(event, context):
@@ -37,6 +37,6 @@ def lambda_handler(event, context):
     else:
         return response_for('no_task_name')
 
-    status_code = add_task_session(task_name)
+    status_code, message = add_task_session(task_name)
 
-    return { 'statusCode': status_code }
+    return { 'statusCode': status_code, 'body': message }
