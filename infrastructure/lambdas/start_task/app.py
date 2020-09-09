@@ -16,7 +16,7 @@ def responseFor(key):
 
 def lambda_handler(event, context):
     if event['body'] == None:
-        return responseFor('no_task_namez')
+        return responseFor('no_task_name')
 
     body = json.loads(event['body'])
 
