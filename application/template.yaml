@@ -27,6 +27,22 @@ Resources:
       Policies:
         - S3CrudPolicy:
             BucketName: task-tracker-mvp-bucket
+  StopTaskFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: lambdas/
+      Handler: stop_task.lambda_handler
+      Runtime: python3.8
+      Timeout: 10
+      Events:
+        StartTask:
+          Type: Api
+          Properties:
+            Path: /stop
+            Method: put
+      Policies:
+        - S3CrudPolicy:
+            BucketName: task-tracker-mvp-bucket
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function

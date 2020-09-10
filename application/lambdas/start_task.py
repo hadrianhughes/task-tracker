@@ -1,5 +1,5 @@
 import json
-from common import response_for, epoch_now, open_db
+from common import response_for, epoch_now, open_db, format_response
 
 def add_task_session(task_name):
     try:
@@ -7,7 +7,7 @@ def add_task_session(task_name):
         dbResponse = db.get()
         data = dbResponse['Body'].read()
     except:
-        return (500, 'An error occurred while attempting to access to S3 bucket')
+        return response_for('s3_error')
 
     json_data = json.loads(data)
     sessions = json_data['sessions']
@@ -32,11 +32,10 @@ def lambda_handler(event, context):
 
     body = json.loads(event['body'])
 
-    if 'task_name' in body:
-        task_name = body['task_name']
-    else:
+    if not 'task_name' in body:
         return response_for('no_task_name')
 
+    task_name = body['task_name']
     status_code, message = add_task_session(task_name)
 
-    return { 'statusCode': status_code, 'body': message }
+    return format_response(status_code, message)

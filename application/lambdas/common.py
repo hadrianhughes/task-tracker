@@ -6,18 +6,19 @@ bucket_name = 'task-tracker-mvp-bucket'
 db_filename = 'task-tracker-db.json'
 
 responses = {
-    'no_task_name': (400, 'A task_name must be included in the request body')
+    'no_task_name': (400, 'A task_name must be included in the request body'),
+    's3_error': (500, 'An error occurred while attempting to access to S3 bucket'),
+    'no_current_task': (409, 'Not currently working on a task')
 }
 
 def response_for(key):
     if not key in responses:
         raise KeyError('Response for ' + key + ' does not exist')
     else:
-        key_response = responses[key]
-        return {
-            'statusCode': key_response[0],
-            'body': key_response[1]
-        }
+        return responses[key]
+
+def format_response(status_code, message):
+    return { 'statusCode': status_code, 'body': message }
 
 
 def epoch_now():
